@@ -1,0 +1,68 @@
+/* Centering the container */
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjust the height based on your preference */
+}
+
+/* Styling the Tetris container */
+.tetris-container {
+    border: 2px solid #000;
+    padding: 20px; /* Adjust padding for spacing */
+}
+
+/* Styling the control buttons */
+.controls {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px; /* Adjust spacing between Tetris game and buttons */
+}
+
+.controls button {
+    margin-bottom: 10px; /* Adjust button spacing */
+    /* Add more styling as needed */
+}
+
+:host {
+    display: inline-block;
+    width: auto;
+    text-align: center;
+}
+
+:host button.bw {
+    color: black;
+    background: white;
+    border: 2px solid black;
+}
+
+:host button.colors {
+    color: black;
+    background: yellow;
+    border: 2px solid red;
+}
+
+:host button.colors span {
+    font-weight: bold;
+    background: white;
+    color: black;
+    padding: 0 2px;
+}
+
+:host button.colors span.green {
+    background: green;
+    color: white;
+}
+
+:host button.colors span.red {
+    background: red;
+}
+
+.controls {
+    float: right;
+}
+
+tetris-core {
+    display: inline-block;
+}
