@@ -191,7 +191,7 @@ export class GameManagerService {
       
         // Increase game speed for each line cleared
         if (linesCleared > 0) {
-          const speedIncrement = 100; // Adjust the speed increment value
+          const speedIncrement = 50; // Adjust the speed increment value
           const newGameSpeed = this._gameSpeed - (linesCleared * speedIncrement);
           this.updateGameSpeed(newGameSpeed);
         }

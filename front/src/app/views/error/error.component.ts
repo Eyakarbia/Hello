@@ -24,7 +24,6 @@ export class ErrorComponent  {
 
   onLineCleared() {
     console.log('line cleared');
-    alert('line cleared');
 
 
   }
