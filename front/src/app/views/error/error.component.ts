@@ -1,4 +1,4 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, ViewChild } from '@angular/core';
 import {TetrisCoreComponent} from 'ngx-tetris';
 
 @Component({
@@ -6,7 +6,9 @@ import {TetrisCoreComponent} from 'ngx-tetris';
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.css']
 })
-export class ErrorComponent  {
+export class ErrorComponent implements AfterViewInit {
+  ngAfterViewInit(): void {
+  }
 
   @ViewChild('game')
   private _tetris: TetrisCoreComponent = undefined as any;
@@ -19,18 +21,38 @@ export class ErrorComponent  {
   public start = false;
   public stop = false;
   public reset = false;
+  public currentScore: number = 0;
+  isMuted: boolean = false;
 
+  toggleMute() {
+    const gameMusic = document.getElementById('gameMusic') as HTMLAudioElement;
+    const gameMusic2 = document.getElementById('gameMusic2') as HTMLAudioElement;
 
+    if (gameMusic && gameMusic2) {
+      this.isMuted = !this.isMuted;
 
+      gameMusic.muted = this.isMuted;
+      gameMusic2.muted = this.isMuted;
+    }
+  }
+  updateScore(newScore: number) {
+    this.currentScore = newScore;
+}
   onLineCleared() {
+  
     console.log('line cleared');
 
-
   }
+  
+ 
   public onGameOver() {
       alert('game over');
-  }
+      this._tetris.actionReset();
 
+
+  }
+ 
+  
   public onRotateButtonPressed() {
       this._tetris.actionRotate();
   }

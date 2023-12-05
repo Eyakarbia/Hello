@@ -36,10 +36,11 @@ export class TetrisCoreComponent implements OnInit, OnChanges {
     @Input() start = false;
     @Input() stop = false;
     @Input() reset = false;
-
+    @Output() scoreChanged: EventEmitter<number> = new EventEmitter<number>();
     @Output() lineCleared: EventEmitter<any> = new EventEmitter();
     @Output() gameOver: EventEmitter<any> = new EventEmitter();
 
+    public score: number = 0; // Ensure it's initialized to 0 or a valid number
     public grid!: Array<Tile>;
     public state: GameState = GameState.Paused;
 
@@ -97,14 +98,26 @@ export class TetrisCoreComponent implements OnInit, OnChanges {
     public actionStart() {
         this._manager.start();
         this.state = GameState.Started;
+        const gameMusic = document.getElementById('gameMusic') as HTMLAudioElement;
+        if (gameMusic) {
+            gameMusic.play();
+        }
     }
     public actionStop() {
         if (this.state === GameState.Started) {
             this._manager.stop(); // Stop the game
             this.state = GameState.Paused; // Update state to Paused
+            const gameMusic = document.getElementById('gameMusic') as HTMLAudioElement;
+            if (gameMusic) {
+                gameMusic.pause();
+            }
         } else if (this.state === GameState.Paused) {
             this._manager.start(); // Resume the game
             this.state = GameState.Started; // Update state to Started
+            const gameMusic = document.getElementById('gameMusic') as HTMLAudioElement;
+            if (gameMusic) {
+                gameMusic.play();
+            }
         }
     }
     
@@ -114,12 +127,31 @@ export class TetrisCoreComponent implements OnInit, OnChanges {
     }
 
     private _onLineCleared() {
+        this.score += 100;
+        this.scoreChanged.emit(this.score); // Emit the score
         this.lineCleared.emit();
+        const gameMusic2 = document.getElementById('gameMusic2') as HTMLAudioElement;
+        if (gameMusic2) {
+            gameMusic2.loop = false; // Set loop attribute to false
+            gameMusic2.play();
+            gameMusic2.onended = () => {
+                gameMusic2.pause(); // Pause the audio when it ends
+            };
+
+        }
     }
 
     private _onGameOver() {
         this.state = GameState.Over;
         this.gameOver.emit();
+        const gameMusic = document.getElementById('gameMusic') as HTMLAudioElement;
+        if (gameMusic) {
+            gameMusic.pause();
+        }
     }
+
+    getScore(): number {
+        return this.score;
+      }
 
 }

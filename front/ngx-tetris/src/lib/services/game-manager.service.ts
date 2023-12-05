@@ -17,6 +17,9 @@ export class GameManagerService {
     resume() {
         throw new Error('Method not implemented.');
     }
+
+    public score: number = 0;
+
     public settings = {
         tileSize: null
     };
@@ -191,9 +194,11 @@ export class GameManagerService {
       
         // Increase game speed for each line cleared
         if (linesCleared > 0) {
-          const speedIncrement = 50; // Adjust the speed increment value
+          const speedIncrement = 15; // Adjust the speed increment value
           const newGameSpeed = this._gameSpeed - (linesCleared * speedIncrement);
           this.updateGameSpeed(newGameSpeed);
+          const scoreIncrement = 20; // Score increment value
+          this.score += linesCleared * scoreIncrement;
         }
       }
       

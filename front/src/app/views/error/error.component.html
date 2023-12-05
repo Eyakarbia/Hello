@@ -5,18 +5,32 @@
       [class.black-and-white]="bw"
       tileSize="20px"
       (lineCleared)="onLineCleared()"
-      (gameOver)="onGameOver()">
+      (gameOver)="onGameOver()"
+      (scoreChanged)="updateScore($event)">
     </tetris-core>
 
 
 <table class="controls">
     <tr>
+        <audio id="gameMusic" loop>
+            <source src="assets/game-music.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+            
+          </audio>
+          <audio id="gameMusic2" loop>
+            <source src="assets/lineClear.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+            
+          </audio>
         <td><button (click)="game.actionStart()">Start</button></td>
         <td><button (click)="game.actionStop()">Stop</button></td>
         <td><button (click)="game.actionReset()">Reset</button></td>
-        
+        <td>
+            <button (click)="toggleMute()">Mute/Unmute</button>
+        </td>
 
-        <td></td>
+        <td><div>Current Score: {{ currentScore }}</div>
+</td>
     </tr>
     <tr><td></td></tr>
     <tr><td></td></tr>
